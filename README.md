@@ -30,7 +30,7 @@
 
 The project is cloning the Myntra Application for both web and mobile devices. The application is being developed by using React and React Native as front-end technologies for web and mobile respectively. The backend of the application is developed using NestJS - a NodeJS framework
 
-## BACKEND TECH STACK
+## Backend Tech Stack
 
 framework - NestJS
 Database - MySQL
