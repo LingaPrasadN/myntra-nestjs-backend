@@ -1,0 +1,196 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id Int @id @default(autoincrement())
+  mobileNumber String
+  fullName String
+  password String
+  email String
+  gender String
+  alternateMobileNumber String
+  hintName String
+  addresses Addresses[]
+}
+
+model OtpTable {
+  mobileNumber String @unique
+  otp String
+}
+
+model Addresses {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  name String
+  mobileNumber String
+  pincode String
+  address String
+  locality String
+  city String
+  state String
+  typeOfAddress String
+  satOpen Boolean
+  sunOpen Boolean
+  defaultAddr Boolean
+}
+
+model Categories {
+  categoryId Int  @unique @default(autoincrement()) 
+  categoryName String 
+  image String 
+  subCat SubCategories[]
+}
+
+model SubCategories {
+  subCatId Int @unique @default(autoincrement())
+  categoryId Int 
+  subCatName String
+  subCatImage String
+  categories Categories @relation(fields: [categoryId], references: [categoryId])
+  superSubCategories SuperSubCategories[]
+}
+
+model SuperSubCategories {
+  childCategoryId Int @unique @default(autoincrement())  
+  subCatId Int 
+  childCategoryName String  
+  superSubCatImage String
+  subCategories SubCategories @relation(fields: [subCatId], references: [subCatId])
+  products Product[]
+}
+
+
+model Product {
+  id Int @id @default(autoincrement())
+  childCategoryId Int 
+  brand String
+  color String
+  description String
+  discount Int
+  mrp Int
+  name String
+  price Int
+  seller String
+  ratings Int
+  star Float
+  pincode String
+  offer String
+  emiOption String
+  productDetails String
+  sizeFit String
+  isWishlisted Boolean @default(false)
+  superSubCategories SuperSubCategories @relation(fields: [childCategoryId], references: [childCategoryId])
+  sizes Sizes?
+  specification Specification?
+  productImage ProductImage[]
+}
+
+model Sizes {
+  id Int @unique @default(autoincrement())
+  productId Int @unique
+  xsamount Int
+  samount Int
+  mamount Int
+  lamount Int
+  xlamount Int
+  xxlamount Int
+  xsavailable Int
+  savailable Int
+  mavailable Int
+  lavailable Int
+  xlavailable Int
+  xxlavailable Int
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Specification {
+  id Int @unique @default(autoincrement())
+  productId Int @unique
+  s1 String
+  v1 String
+  s2 String
+  v2 String
+  s3 String
+  v3 String
+  s4 String
+  v4 String
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model ProductImage {
+  imageId Int @unique @default(autoincrement())
+  productId Int 
+  imageLink String
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model WishList {
+  id Int @id @default(autoincrement())
+  userId Int
+  productId Int
+  @@unique([userId, productId])
+}
+
+model Bag {
+  id Int @id @default(autoincrement())
+  productId Int
+  userId Int
+  size String
+  quantity Int @default(1)
+  couponDiscount Int @default(0)
+  selected Boolean @default(true)
+  @@unique([productId, userId, size])
+}
+
+model Coupon {
+  id Int @id @default(autoincrement())
+  code String
+  minPurchase Int
+  discount Int
+  expiryDate DateTime
+  expiryTime DateTime
+}
+
+model Order {
+  orderId Int @id @default(autoincrement())
+  userId Int 
+  //products Int
+  addressId Int 
+  orderedOn String
+  totalMrp Int
+  bagDiscount Int
+  couponDiscount Int
+  convinienceFee Int
+  orderTotal Int
+  paymentMode  String
+  status String
+  productDetails ProductDetails[]
+}
+
+model ProductDetails {
+  id Int @id @default(autoincrement())
+  orderId Int 
+  productId Int
+  size String
+  quantity Int
+  discount Int
+  order Order @relation(references: [orderId], fields: [orderId])
+}
+
+
+
+
+
+

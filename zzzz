@@ -1,0 +1,96 @@
+ async homepage() {
+        var res = {}
+        //BEST OF MYNTRA EXCLUSIVE BRANDS
+        var q = await this.prismaService.productImage.findMany({
+            
+        })
+        var arr = []
+        for(var i=0;i<q.length;i++) {
+            var obj = {}
+            obj["imageId"] = q[i].imageId
+            obj["url"] = q[i].imageLink
+            var q2 = await this.prismaService.product.findFirst({
+                where: {
+                    id: q[i].imageId
+                },
+                select: {
+                    childCategoryId: true
+                }
+            }) 
+            if(q2!=null)
+            obj["homeCategoryId"] = q2.childCategoryId
+            arr.push(obj)
+        }
+        res["BEST OF MYNTRA EXCLUSIVE BRANDS"] = arr
+
+        //Deal of the day
+        var q = await this.prismaService.productImage.findMany({
+            
+        })
+        var arr2 = []
+        for(var i=0;i<q.length;i++) {
+            var obj = {}
+            obj["imageId"] = q[i].imageId
+            obj["url"] = q[i].imageLink
+            var q2 = await this.prismaService.product.findFirst({
+                where: {
+                    id: q[i].imageId
+                },
+                select: {
+                    childCategoryId: true
+                }
+            }) 
+            if(q2!=null)
+            obj["homeCategoryId"] = q2.childCategoryId
+            arr2.push(obj)
+        }
+        res["Deal of the day"] = arr2
+
+        //CATEGORIES TO BAG
+        var q = await this.prismaService.productImage.findMany({
+            
+        })
+        var arr3 = []
+        for(var i=0;i<q.length;i++) {
+            var obj = {}
+            obj["imageId"] = q[i].imageId
+            obj["url"] = q[i].imageLink
+            var q2 = await this.prismaService.product.findFirst({
+                where: {
+                    id: q[i].imageId
+                },
+                select: {
+                    childCategoryId: true
+                }
+            }) 
+            if(q2!=null)
+            obj["homeCategoryId"] = q2.childCategoryId
+            arr3.push(obj)
+        }
+        res["CATEGORIES TO BAG"] = arr3
+
+        //TOP PICKS
+        var q = await this.prismaService.productImage.findMany({
+            
+        })
+        var arr4 = []
+        for(var i=0;i<q.length;i++) {
+            var obj = {}
+            obj["imageId"] = q[i].imageId
+            obj["url"] = q[i].imageLink
+            var q2 = await this.prismaService.product.findFirst({
+                where: {
+                    id: q[i].imageId
+                },
+                select: {
+                    childCategoryId: true
+                }
+            }) 
+            if(q2!=null)
+            obj["homeCategoryId"] = q2.childCategoryId
+            arr4.push(obj)
+        }
+        res["TOP PICKS"] = arr4
+
+        return res
+    }
