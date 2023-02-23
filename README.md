@@ -26,6 +26,25 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## MYNTRA CLONE 
+
+The project is cloning the Myntra Application for both web and mobile devices. The application is being developed by using React and React Native as front-end technologies for web and mobile respectively. The backend of the application is developed using NestJS - a NodeJS framework
+
+## BACKEND TECH STACK
+
+framework - NestJS
+Database - MySQL
+ORM - Prisma
+Images Management Website - Cloudinary
+Communication API - Twilio
+
+## High Level Design
+
+## Low Level Design
+
+## Database Schema
+
+
 ## Installation
 
 ```bash
